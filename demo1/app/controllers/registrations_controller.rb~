@@ -1,0 +1,36 @@
+class RegistrationsController < Devise::RegistrationsController
+        #def create
+      # params[:email]
+       #params[:password]
+       #if self.isValidMD5(params[:password])        
+       #begin
+        #user = User.create!(:email => params[:email], :password => params[:password])
+        #render :json => {:data => user.authentication_token, :response=> "success", :message=> "Please activate account via email"}
+        #rescue Exception => e
+        #render :json => {:data => nil, :message => e.message}        
+       #end
+       #else
+        #render :json => {:message=> "Not a MD5 Hash password"}
+       #end
+ 	#end
+ 	def create
+		
+		params[:email]
+       		params[:password]
+		begin
+        		user = User.create!(:email => params[:user][:email], :password => params[:user][:password])
+			user.reset_authentication_token!
+        		render :json => {:data => user.authentication_token, :response=> "success", :message=> "Please activate account via email"}
+			#root_path
+        		rescue Exception => e
+        		render :json => {:data => nil, :message => e.message}        
+       		end	
+	end
+	
+	
+	
+	def after_inactive_sign_up_path_for(resource)
+    		render :json => {:data => user.confirmation_token, :response=> "success", :message=> "Please activate account via email"}
+  	end
+	
+end  

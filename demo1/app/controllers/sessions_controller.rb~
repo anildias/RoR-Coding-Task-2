@@ -1,0 +1,36 @@
+class SessionsController < Devise::SessionsController
+        
+ 	def create
+		begin
+		params[:email]
+		params[:password]
+  		#respond_with resource, :location => after_sign_in_path_for(resource)
+                params[:password] = Digest::MD5.hexdigest(params[:password])
+		user = User.find_by_email_and_encrypted_password!(params[:email],params[:password])
+                if user.confirmation_token.nil?
+		#if password.eql?user.encrypted_password
+		 	render :json => {:response=> "success\n", :message=> "Login success. This is your oauth token for all requests until logout. ", :auth_token => user.authentication_token }
+		else
+			render :json => {:data => user.confirmation_token, :response=> "unsuccess", :message=> "error"}
+		#render :json => {:data => user.authentication_token, :response=> "success", :message=> "error"}
+		end
+		rescue Exception => e
+        		render :json => {:data => nil, :message => e.message}
+		end
+	end
+
+	def destroy
+             begin
+		params[:authentication_token]
+                user= User.find_by_authentication_token(params[:authentication_token])
+		render :json =>{:data => user.authentication_token, :message => "Sign OUT" }
+                user.update_attribute(:authentication_token, "NULL")
+		
+                      render :json =>{:data => nil, :message => "Sign OUT" }
+                 rescue Exception => e
+                render :json => {:data => nil, :message => e.message}
+              end
+ 
+		
+      end
+end  
