@@ -18,11 +18,15 @@ class PlacesController < ApplicationController
 =end
 					 	client_ip = get_ip_address()
 					 	near_by_locations = Place.get_locations(client_ip,category)
-					 	if near_by_locations.to_a.empty?
-					 		render :json=>{:response=>"unsuccessful", :message=>"OOOPS !!!!! no result found try another type"}
-					 	else
-					 		render :json=>{:response=>near_by_locations, :message=>"success"}
-					 	end	
+					 	if near_by_locations == false
+                        	render :json=>{:response=>"unsuccessfull",:message=>"OOOPS !!!! no locations found."}
+                    	else 
+					 		if near_by_locations.to_a.empty?
+					 			render :json=>{:response=>client_ip, :message=>"OOOPS !!!!! no result found try another type"}
+					 		else
+					 			render :json=>{:response=>near_by_locations, :message=>client_ip}
+					 		end	
+					 	end
 	   				end
 			 	rescue Exception => e
 			 		render :json => {:data => "Exception caught", :message => e.message}
