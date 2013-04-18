@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :encryptable, :encryptor => :md5
 
 
-
+  has_and_belongs_to_many :places
   # md5# password format
   PASSWORD_REGEX = /^[a-f0-9]{32}$/i
 

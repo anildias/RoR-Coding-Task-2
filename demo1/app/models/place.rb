@@ -1,0 +1,43 @@
+class Place < ActiveRecord::Base
+  attr_accessible :address, :latitude, :longitude, :name, :type, :current_latitude, :current_longitude
+  #after_validation :geocode
+  	has_and_belongs_to_many :users
+ 	geocoded_by :name 
+
+   	def self.get_locations(client_ip,category)
+   		location = Array.new
+   		location_coordinates = Geocoder.coordinates(client_ip)
+   		latitude = location_coordinates[0].to_f
+   		longitude = location_coordinates[1].to_f		
+=begin
+	invoke google places API with API key 
+=end  		  
+		client = GooglePlaces::Client.new("AIzaSyB9YSE91Y2JmX_8ULqaSaS2iCnLvPW5xy0")
+
+		get_places_from_db = Place.find_by_sql("SELECT name,address,latitude,longitude FROM places WHERE abs(places.current_latitude-#{latitude}) <= 1e-6 and abs(places.current_longitude-#{longitude}) <= 1e-6and type='#{category}'")
+
+=begin
+	if table is empty use google api to locate nearby locations , and insert new locations into places table.
+
+		otherwise fetch locations from table.
+=end			
+		if get_places_from_db.to_a.empty?
+			location_full_address = client.spots( location_coordinates[0].to_f, location_coordinates[1].to_f, :radius=> '3000', :types => category)
+	   				
+			location_full_address.length.times do |i|
+		   		place = Place.create!(:address => location_full_address[i].vicinity, :latitude => location_full_address[i].lat, :longitude => location_full_address[i].lng, :type => category, :name => location_full_address[i].name, :current_latitude => location_coordinates[0].to_f, :current_longitude => location_coordinates[1].to_f)
+			end
+
+			location_full_address.length.times do |i|
+		    	location[i] = location_full_address[i].name, location_full_address[i].vicinity, location_full_address[i].lat, location_full_address[i].lng   
+			end	
+			return location
+
+		else
+			return get_places_from_db
+		end
+
+	end			
+end
+ 
+ 

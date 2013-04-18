@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410035138) do
+ActiveRecord::Schema.define(:version => 20130417113935) do
+
+  create_table "places", :force => true do |t|
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "name"
+    t.string   "type"
+    t.float    "current_latitude"
+    t.float    "current_longitude"
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -37,6 +49,9 @@ ActiveRecord::Schema.define(:version => 20130410035138) do
     t.string   "confirmed_at"
     t.string   "confirmation_sent_at"
     t.string   "confirmation_token"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "address"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

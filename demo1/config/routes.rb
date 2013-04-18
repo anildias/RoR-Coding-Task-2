@@ -15,9 +15,10 @@ Demo1::Application.routes.draw do
   root :to=>"posts#index"
 
   devise_scope :user do
-      match "qlock/qburst/api/v1/sign_up", :to => "registrations#create", :via => [:post,:get]
-      match "qlock/qburst/api/v1/sign_in", :to => "sessions#create", :via => [:post,:get]
-	    match "qlock/qburst/api/v1/sign_out", :to => "sessions#destroy", :via => [:post,:get]	
+      match "qlock/qburst/api/v1/sign_up",  :to => "registrations#create",  :via => [:post,:get]
+      match "qlock/qburst/api/v1/sign_in",  :to => "sessions#create",       :via => [:post,:get]
+	    match "qlock/qburst/api/v1/sign_out", :to => "sessions#destroy",      :via => [:post,:get]	
+      match "qlock/qburst/api/vi/ip",       :to => "places#place",          :via => [:post,:get]   
   end
               
   # The priority is based upon order of creation:
