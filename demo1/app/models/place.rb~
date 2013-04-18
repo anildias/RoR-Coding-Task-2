@@ -25,9 +25,6 @@ class Place < ActiveRecord::Base
 			location_full_address = client.spots( location_coordinates[0].to_f, location_coordinates[1].to_f, :radius=> '3000', :types => category)
 	   				
 			location_full_address.length.times do |i|
-=begin
-	invoking delayed_job gem method delay 
-=end  		
 		   		place = Place.delay.create!(:address => location_full_address[i].vicinity, :latitude => location_full_address[i].lat, :longitude => location_full_address[i].lng, :type => category, :name => location_full_address[i].name, :current_latitude => location_coordinates[0].to_f, :current_longitude => location_coordinates[1].to_f)
 			end
 
