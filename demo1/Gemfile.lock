@@ -73,8 +73,8 @@ GEM
     mime-types (1.22)
     multi_json (1.7.2)
     multi_xml (0.5.3)
-    mysql2 (0.3.11)
     orm_adapter (0.4.0)
+    pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -134,7 +134,7 @@ DEPENDENCIES
   geocoder
   google_places
   jquery-rails
-  mysql2
+  pg
   rails (= 3.2.12)
   sass-rails (~> 3.2.3)
   uglifier (>= 1.0.3)
