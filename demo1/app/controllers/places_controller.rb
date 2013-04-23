@@ -25,13 +25,13 @@ class PlacesController < ApplicationController
                         	end
                     else 
                         if @locations.to_a.empty?
-                          	@empty=true
+                          	@is_locations_empty=true
                             respond_to do |format|
                                 format.html
                                 format.json{render :json=>{:response=>"failure",:message=>"Sorry, no results found"}}
                             end
                         else
-                          	@empty=false
+                          	@is_locations_empty=false
                             @size=@locations.length
                             respond_to do |format|
    		                        format.html
