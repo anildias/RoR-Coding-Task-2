@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
            
       	else
             
-      		  '115.119.59.38'
+      		  request.remote_ip
     	  end
 	  end
 end

@@ -35,8 +35,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: demo1_production
+  database: demo1_development
   pool: 5
   username: root
-  password:
+  password: qburst
   socket: /var/run/mysqld/mysqld.sock

@@ -1,0 +1,19 @@
+<html>
+	<% if @is_parameter_value == true%>
+		<% if @unauthorised_user == true%>
+			Unauthorised User Attempt!!!!!
+		<% else %>
+			<% if @locations == false%>
+				OOPs!!!!, unable to locate.
+			<% else%>
+				<% if @empty == true%>
+					Sorry, no reuslts found
+				<% else%>
+					<%= @locations%>
+				<% end%>
+			<% end%>
+		<% else %>
+	<% else %>
+		Wrong parameters!!!
+	<% end%>
+</html>

@@ -20,7 +20,17 @@ Demo1::Application.routes.draw do
 	    match "qlock/qburst/api/v1/sign_out", :to => "sessions#destroy",      :via => [:post,:get]	
       match "qlock/qburst/api/vi/ip",       :to => "places#place",          :via => [:post,:get]   
   end
-              
+   
+   resources :places do
+      member do
+
+      end
+
+      collection do
+          get 'places'
+          post 'places'
+      end
+   end           
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
